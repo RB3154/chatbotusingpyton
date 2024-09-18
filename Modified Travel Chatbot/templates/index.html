@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Travel Chatbot</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Chat with the Travel Chatbot</h1>
+        
+        <div class="chat-box">
+            <img src="{{ url_for('static', filename='bot.png') }}" alt="Chatbot" class="bot-image">
+            {% if bot_response %}
+            <p><strong>Chatbot:</strong> <span id="bot-response">{{ bot_response }}</span></p>
+            {% endif %}
+        </div>
+
+        <form method="POST" action="/">
+            <label for="message">You:</label>
+            <input type="text" id="message" name="message" required>
+            <button type="submit">Send</button>
+        </form>
+    </div>
+
+    <!-- JavaScript for speech synthesis -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Get the bot's response from the server
+            var botResponse = document.getElementById('bot-response') ? document.getElementById('bot-response').innerText : "";
+
+            if (botResponse) {
+                // Check if the Web Speech API is supported
+                if ('speechSynthesis' in window) {
+                    // Create a new SpeechSynthesisUtterance instance for the bot's response
+                    var msg = new SpeechSynthesisUtterance(botResponse);
+                    // Set pitch and rate (optional customization)
+                    msg.pitch = 1;  // Normal pitch
+                    msg.rate = 1;   // Normal speed
+                    // Speak the bot's response
+                    window.speechSynthesis.speak(msg);
+                } else {
+                    console.error("Speech synthesis not supported in this browser.");
+                }
+            }
+        });
+    </script>
+</body>
+</html>
