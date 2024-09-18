@@ -3,7 +3,7 @@ from flask import Flask, render_template, request
 
 app = Flask(__name__)
 
-API_KEY = 'AIzaSyD3j5vE2Udxpv_R6ZerkK4ATjvomkUIhQo'
+API_KEY = 'your api key '
 ai.configure(api_key=API_KEY)
 model = ai.GenerativeModel("gemini-pro")
 chat = model.start_chat()
